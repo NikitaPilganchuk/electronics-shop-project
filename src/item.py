@@ -1,3 +1,7 @@
+import csv
+from csv import DictReader
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -45,8 +49,13 @@ class Item:
         self.price = self.price * self.pay_rate
         return self.price
 
+    @classmethod
+    def instantiate_from_csv(self):
+        with open('items.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                Item.all.append(Item(row['name'], row['price'], row['quantity']))
 
-xiaomi = Item('xIIIiaomi', 100, 5)
-print(xiaomi.name)
-xiaomi.name = 'TOPZASVOIDENGI'
-print(xiaomi.name)
+    @staticmethod
+    def string_to_number(value: str) -> int:
+        return int(value)
